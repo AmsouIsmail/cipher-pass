@@ -115,7 +115,7 @@ else :
             fichier.write(msg + "\n")
     print("\n✔️ le fichier a ete dechiffrer en succes !!!")
 
-    for i in range(10, -1,-1):
+    for i in range(30, -1,-1):
         print(f"\r⏳ Il va être chiffré pendant {i} secondes ", end="")
         sleep(1) 
 
