@@ -10,6 +10,7 @@ from Crypto.Util.Padding import pad, unpad
 import hashlib
 import base64
 from time import sleep
+from sys import exit
 
 #pour verifier le choix d'utilisateur
 def choix() :
@@ -71,10 +72,15 @@ def dechiffrement(messageliste, key):
     iv = message_chif_byte[:AES.block_size]  # Extraire le vecteur d'initialisation (IV)
     dechif_aes = AES.new(key, AES.MODE_CBC, iv)  # Créer un objet AES pour le déchiffrement avec l'IV
     for i in messageliste:
-        message_chif_byte = base64.b64decode(i)  # Décoder le message chiffré
-        message_chif = message_chif_byte[AES.block_size:]  # Extraire le message chiffré
-        dechif = unpad(dechif_aes.decrypt(message_chif), AES.block_size).decode()  # Retirer le padding
-        liste_dechiffrement.append(dechif)
+        try:
+            message_chif_byte = base64.b64decode(i)  # Décoder le message chiffré
+            message_chif = message_chif_byte[AES.block_size:]  # Extraire le message chiffré
+            dechif = unpad(dechif_aes.decrypt(message_chif), AES.block_size).decode()  # Retirer le padding
+            liste_dechiffrement.append(dechif)
+        except (ValueError,KeyError) :  # Capture l'erreur de padding ou autre erreur liée au chiffrement
+            print("\n❌ Mot de passe incorrect. Veuillez réessayer.")
+            return None
+
     return liste_dechiffrement
 
 
@@ -96,13 +102,21 @@ if userchoix == 1 :
 else :
     message_dechiffrer = []
     message_dechiffrer = dechiffrement(messageliste,key)
+
+    # if il y a un erreur soit mot de passe incorrect soit simple erreur de dechiffrement il return les ancien ligne de fichier
+    if message_dechiffrer == None :
+        with open(chemain,"w", encoding="utf-8") as fichier : # Ouvrir le fichier en mode écriture ("w" supprime le contenu existant)
+            for msg in messageliste :
+                fichier.write(msg + "\n")
+            exit()
+
     with open(chemain,"w", encoding="utf-8") as fichier : # Ouvrir le fichier en mode écriture ("w" supprime le contenu existant)
         for msg in message_dechiffrer :
             fichier.write(msg + "\n")
     print("\n✔️ le fichier a ete dechiffrer en succes !!!")
 
-    for i in range(0, 31):
-        print(f"\r⏳ Il va être chiffré pendant {30 - i} secondes ", end="")
+    for i in range(10, -1,-1):
+        print(f"\r⏳ Il va être chiffré pendant {i} secondes ", end="")
         sleep(1) 
 
     message_chiffrer = []
