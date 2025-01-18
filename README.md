@@ -1,7 +1,7 @@
-# 🔐 Cipher PWD - Chiffrement et Déchiffrement de Fichiers
+# 🔐 Cipher Pass - Chiffrement et Déchiffrement de Fichiers
 
 ## 📌 Description
-**Cipher PWD** est un script Python permettant de **chiffrer et déchiffrer** le contenu d'un fichier texte en utilisant **AES (Advanced Encryption Standard) en mode CBC**.  
+**Cipher Pass** est un script Python permettant de **chiffrer et déchiffrer** le contenu d'un fichier texte en utilisant **AES (Advanced Encryption Standard) en mode CBC**.  
 Le chiffrement protège le fichier en remplaçant son contenu par une version sécurisée, accessible uniquement avec le bon mot de passe.
 
 ## 🚀 Fonctionnalités
@@ -17,8 +17,8 @@ Le chiffrement protège le fichier en remplaçant son contenu par une version s�
    python -m pip install pycryptodome
 
 ## Télécharger ou cloner ce dépôt :
-git clone https://github.com/AmsouIsmail/cipher-pwd.git
-cd cipher-pwd
+git clone https://github.com/AmsouIsmail/cipher-pass.git
+cd cipher-pass
 
 📜 Utilisation
 Exécuter le script :
